@@ -1,0 +1,97 @@
+﻿@model  IEnumerable<MVC.Models.Apartment>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <h2>Apartments List</h2>
+
+        <table class="table table-striped table-condensed">
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OwnerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CityId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameEng)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxAdults)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxChildren)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalRooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BeachDistance)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var apartment in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.Id)
+                    </td>
+                    <td>
+                        @Html.Action("GetNameOwner", new { id = apartment.OwnerId})
+                    </td>
+                    <td>
+                        @Html.Action("GetNameStatus", new { id = apartment.StatusId })
+                    </td>
+                    <td>
+                        @Html.Action("GetNameCity", new { id = apartment.CityId })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.NameEng)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.MaxAdults)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.MaxChildren)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.TotalRooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => apartment.BeachDistance)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = apartment.Id }, new { @class = "btn btn-primary btn-sm" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

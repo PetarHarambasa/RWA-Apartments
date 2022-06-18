@@ -1,0 +1,46 @@
+﻿@using MVC.Models.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="container px-0">
+        <h2>Registracija korisnika</h2>
+    </div>
+    @using (Html.BeginForm("Index", "Register", null, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "")
+        <div class="mb-3">
+            @Html.LabelFor(m => m.UserName)
+            @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "UserName" } })
+            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.PasswordHash)
+            @Html.EditorFor(m => m.PasswordHash, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lozinka" } })
+            @Html.ValidationMessageFor(m => m.PasswordHash, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Email)
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.PhoneNumber)
+            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "PhoneNumber" } })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.Address)
+            @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address" } })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+</div>
+
+

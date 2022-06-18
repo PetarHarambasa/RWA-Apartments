@@ -1,0 +1,57 @@
+﻿@using MVC.Models
+@model User
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+    MVC.Models.Apartment a = ViewBag.Apartman as MVC.Models.Apartment;
+    List<MVC.Models.TaggedApartment> apartmentTagList = ViewBag.Tags as List<MVC.Models.TaggedApartment>;
+}
+
+<div class="container">
+    <h2>Details of an Apartment</h2>
+    <div class="container px-0">
+        <p>Owner: @Html.Action("GetNameOwner", new { id = a.OwnerId })</p>
+        <p>Status: @Html.Action("GetNameStatus", new { id = a.StatusId })</p>
+        <p>City: @Html.Action("GetNameCity", new { id = a.CityId })</p>
+        <p>Address: @a.Address</p>
+        <p>Name: @a.Name</p>
+        <p>NameEng: @a.NameEng</p>
+        <p>Price: @a.Price</p>
+        <p>MaxAdults: @a.MaxAdults</p>
+        <p>MaxChildren: @a.MaxChildren</p>
+        <p>TotalRooms: @a.TotalRooms</p>
+        <p>BeachDistance: @a.BeachDistance</p>
+    </div>
+    <div class="container px-0">
+        <h2>Tags</h2>
+        @for (int i = 0; i < apartmentTagList.Count; i++)
+        {
+            <p>
+                @Html.Action("GetTagNameApartment", new { id = apartmentTagList[i].TagId })
+            </p>
+        }
+
+    </div>
+    <h2>Contact</h2>
+    <div class="container px-0">
+        <div class="mb-3">
+            @Html.TextBox("username", value: @Model.UserName, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.TextBox("email", value: @Model.Email, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.TextBox("phoneNumber", value: @Model.PhoneNumber, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.TextBox("address", value: @Model.Address, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            <input type="submit" value="Book" class="btn btn-primary" />
+        </div>
+    </div>
+</div>

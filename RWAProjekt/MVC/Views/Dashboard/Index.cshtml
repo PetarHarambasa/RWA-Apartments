@@ -1,0 +1,21 @@
+﻿@model MVC.Models.User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+}
+
+<div class="container">
+
+    <h2>Dashboard</h2>
+    <div class="container px-0">
+        <p>Username: @Model.UserName</p>
+        <p>Email: @Model.Email</p>
+        <p>Phonenumber: @Model.PhoneNumber</p>
+        <p>Address: @Model.Address</p>
+    </div>
+</div>
+
+
+
+
