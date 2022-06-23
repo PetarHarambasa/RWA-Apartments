@@ -20,7 +20,7 @@ namespace MVC.Models.ViewModels
         [Required(ErrorMessage = "PhoneNumber ne smije biti prazan")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "username")]
+        [Display(Name = "Username")]
         [Required(ErrorMessage = "Username ne smije biti prazan")]
         public string UserName { get; set; }
 

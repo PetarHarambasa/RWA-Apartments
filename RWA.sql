@@ -69,6 +69,7 @@ AS
 BEGIN
 	INSERT INTO [dbo].[Apartment](OwnerId, TypeId, StatusId, CityId, Address, Name, NameEng, Price, MaxAdults, MaxChildren, TotalRooms, BeachDistance) 
 	VALUES(@ownerId, @typeId, @statusId, @cityId, @adress, @name, @nameEng, @price, @maxAdults, @maxChildren, @totalRooms, @beachDistance)
+	SELECT Id FROM Apartment WHERE Id = @@IDENTITY
 END
 GO
 
@@ -167,6 +168,15 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE AddApartmentTag
+	@apartmentId INT,
+	@tagId INT
+AS
+BEGIN
+	INSERT INTO TaggedApartment (ApartmentId, TagId) VALUES (@apartmentId, @tagId)
+END
+GO
+
 -- PROC: LoadTagTypes
 CREATE PROCEDURE LoadTagTypes
 AS
@@ -205,4 +215,18 @@ AS
 BEGIN
 INSERT INTO [dbo].[Tag](TypeId, Name, NameEng)
 VALUES (@tagTypeId, @name, @nameEng)
+END
+GO
+
+--PROCS: ApartmentPictures
+CREATE PROCEDURE AddApartmentPicture
+	@apartmentId int,
+	@path nvarchar(max),
+	@base64Content nvarchar(max),
+	@name nvarchar(max),
+	@isRepresentative bit
+AS
+BEGIN
+	INSERT INTO [dbo].[ApartmentPicture](CreatedAt, ApartmentId, Path, Base64Content, Name, IsRepresentative)
+	VALUES (GETDATE(), @apartmentId, @path, @base64Content, @name, @isRepresentative)
 END

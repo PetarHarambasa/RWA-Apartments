@@ -31,6 +31,10 @@
                     <asp:DropDownList ID="ddlCity" class="form-select" runat="server"></asp:DropDownList>
                 </div>
                 <div class="mb-3">
+                    <asp:Label ID="lblTag" for="cblTag" class="form-label" runat="server" Text="Tag"></asp:Label>
+                    <asp:CheckBoxList ID="cblTag" class="form-select table_tag" runat="server"></asp:CheckBoxList>
+                </div>
+                <div class="mb-3">
                     <asp:Label ID="lblAddress" for="txtAddress" class="form-label" runat="server" Text="Address"></asp:Label>
                     <asp:TextBox ID="txtAddress" class="form-control" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtAddress" Display="Dynamic" ForeColor="Red">Niste upisali adresu</asp:RequiredFieldValidator>
@@ -59,6 +63,16 @@
                     <asp:Label ID="lblBeachDistance" for="txtBeachDistance" class="form-label" runat="server" Text="Beach Distance"></asp:Label>
                     <asp:TextBox ID="txtBeachDistance" class="form-control" runat="server"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="txtBeachDistance" Display="Dynamic" ForeColor="Red">Niste upisali udaljenost od plaže</asp:RequiredFieldValidator>
+                </div>
+                <div class="mb-3">
+                    <asp:Label for="fuUploadMain" class="form-label" runat="server">Representative image</asp:Label>
+                    <asp:FileUpload ID="fuUploadMain" runat="server" class="form-control" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="fuUploadMain" Display="Dynamic" ForeColor="Red">Niste uploadli sliku</asp:RequiredFieldValidator>
+                </div>
+                <div class="mb-3">
+                    <asp:Label for="fuUploadOther" class="form-label" runat="server">Other images</asp:Label>
+                    <asp:FileUpload ID="fuUploadOther" multiple="multiple" runat="server" class="form-control" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator11" runat="server" ControlToValidate="fuUploadOther" Display="Dynamic" ForeColor="Red">Niste uplodali jos neku sliku</asp:RequiredFieldValidator>
                 </div>
                 <asp:Button ID="addApartment" class="btn btn-primary" runat="server" Text="Add" OnClick="addApartment_Click" />
             </fieldset>

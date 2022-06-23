@@ -64,10 +64,18 @@ namespace rwaLib.Dal
             SqlHelper.ExecuteNonQuery(CS, nameof(SaveUser), user.Email, user.PhoneNumber, user.Username, user.Address, user.Id);
         }
 
-        public void AddApartment(Apartment apartment)
+        public int AddApartment(Apartment apartment)
         {
-            SqlHelper.ExecuteDataset(CS, nameof(AddApartment), apartment.OwnerId, apartment.TypeId, apartment.StatusId, apartment.CityId, apartment.Address,
-                apartment.Name, apartment.NameEng, apartment.Price, apartment.MaxAdults, apartment.MaxChildren, apartment.TotalRooms, apartment.BeachDistance);
+            int apartmentId = 0;
+            var result = SqlHelper.ExecuteDataset(CS, nameof(AddApartment), apartment.OwnerId, apartment.TypeId, apartment.StatusId, apartment.CityId, apartment.Address,
+                apartment.Name, apartment.NameEng, apartment.Price, apartment.MaxAdults, apartment.MaxChildren, apartment.TotalRooms, apartment.BeachDistance).Tables[0];
+
+            if (result.Rows.Count != 0)
+            {
+                apartmentId = (int)result.Rows[0][nameof(Apartment.Id)];
+            }
+
+            return apartmentId;
         }
 
         public IList<Apartment> LoadApartments()
@@ -78,10 +86,6 @@ namespace rwaLib.Dal
 
             foreach (DataRow row in tblApartments.Rows)
             {
-
-              // if ((DateTime)row[nameof(Apartment.DeletedAt)] == null)
-                //{
-
                     apartments.Add(
                         new Apartment
                         {
@@ -99,8 +103,6 @@ namespace rwaLib.Dal
                             TotalRooms = (int)row[nameof(Apartment.TotalRooms)],
                             BeachDistance = (int)row[nameof(Apartment.BeachDistance)],
                         });
-
-                //}
             }
             return apartments;
         }
@@ -223,6 +225,17 @@ namespace rwaLib.Dal
         public void AddTag(Tag tag)
         {
             SqlHelper.ExecuteNonQuery(CS, nameof(AddTag), tag.TypeId, tag.Name, tag.NameEng);
+        }
+
+        public void AddApartmentTag(TaggedApartment tagged)
+        {
+            SqlHelper.ExecuteNonQuery(CS, nameof(AddApartmentTag), tagged.ApartmentId, tagged.TagId);
+        }
+
+        public void AddApartmentPicture(ApartmentPicture apartmentPicture)
+        {
+            SqlHelper.ExecuteNonQuery(CS, nameof(AddApartmentPicture), apartmentPicture.ApartmentId,
+                apartmentPicture.Path, apartmentPicture.Base64Content, apartmentPicture.Name, apartmentPicture.IsRepresentative);
         }
     }
 }

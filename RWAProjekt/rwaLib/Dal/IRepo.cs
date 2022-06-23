@@ -16,7 +16,7 @@ namespace rwaLib.Dal
         IList<ApartmentStatus> LoadApartmentStatus();
         IList<City> LoadCity();
         IList<Apartment> LoadApartments();
-        void AddApartment(Apartment apartment);
+        int AddApartment(Apartment apartment);
         void SaveApartment(Apartment apartment);
         void DeleteApartment(Apartment apartment);
         IList<Tag> LoadTags();
@@ -24,5 +24,7 @@ namespace rwaLib.Dal
         void SaveTag(Tag tag);
         void DeleteTag(Tag tag);
         void AddTag(Tag tag);
+        void AddApartmentTag(TaggedApartment tagged);
+        void AddApartmentPicture(ApartmentPicture apartmentPicture);
     }
 }

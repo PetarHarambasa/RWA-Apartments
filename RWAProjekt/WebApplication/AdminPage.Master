@@ -11,23 +11,10 @@
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
 
     <!-- CUSTOM CSS -->
-    <style>
-        fieldset {
-            border: 1px solid #ced4da;
-            padding: inherit;
-            border-radius: 4px;
-        }
-
-            fieldset > legend {
-                float: initial;
-                width: auto;
-                padding: revert;
-                font-size: initial;
-                margin: 0;
-            }
-    </style>
+    <link href="Content/index.css" rel="stylesheet" />
 
     <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
 </head>
 <body>
     <form id="web_app" runat="server">
@@ -101,13 +88,14 @@
 
     <!-- BOOTSTRAP -->
     <script src="Scripts/bootstrap.min.js"></script>
-    
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
     </script>
+
 </body>
 </html>

@@ -56,7 +56,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <fieldset class="p-4">
-                        <legend>List of Apartments</legend>
+                        <legend>Select Apartment to Edit</legend>
                         <asp:ListBox runat="server"
                             ID="lbApartments"
                             CssClass="form-control"
