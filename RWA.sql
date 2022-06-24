@@ -5,6 +5,7 @@ UPDATE [AspNetUsers] SET PasswordHash=CONVERT(varchar(max), HASHBYTES ('SHA2_512
 INSERT INTO AspNetRoles (Name) VALUES ('Admin'), ('User') -- Add ROLES
 INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES (1,1), (2,2) -- Combine Roles and Users
 
+GO
 --Procedure
 CREATE PROCEDURE AuthUser
 	@username NVARCHAR(50),
@@ -230,3 +231,13 @@ BEGIN
 	INSERT INTO [dbo].[ApartmentPicture](CreatedAt, ApartmentId, Path, Base64Content, Name, IsRepresentative)
 	VALUES (GETDATE(), @apartmentId, @path, @base64Content, @name, @isRepresentative)
 END
+GO
+
+--PROCS: LoadApartmentPicture
+CREATE PROCEDURE LoadApartmentPicture
+	@apartmentId INT
+AS
+BEGIN
+	SELECT * FROM ApartmentPicture WHERE ApartmentId=@apartmentId
+END
+GO

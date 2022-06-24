@@ -31,6 +31,27 @@ namespace MVC.Models
             return apartmentTags;
         }
 
+        public static List<ApartmentPicture> LoadApartmentPicture(int id)
+        {
+            List<ApartmentPicture> apartmentPictures = new List<ApartmentPicture>();
+            ds = SqlHelper.ExecuteDataset(cs, nameof(LoadApartmentPicture), id);
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                var apartmentPicture = new ApartmentPicture();
+
+                apartmentPicture.Id = (int)row[nameof(ApartmentPicture.Id)];
+                apartmentPicture.ApartmentId = (int)row[nameof(ApartmentPicture.ApartmentId)];
+                apartmentPicture.Path = row[nameof(ApartmentPicture.Path)].ToString();
+                apartmentPicture.Base64Content = row[nameof(ApartmentPicture.Base64Content)].ToString();
+                apartmentPicture.Name = row[nameof(ApartmentPicture.Name)].ToString();
+                apartmentPicture.IsRepresentative = (bool)row[nameof(ApartmentPicture.IsRepresentative)];
+                apartmentPictures.Add(apartmentPicture);
+            }
+
+            return apartmentPictures;
+        }
+
         public static List<Apartment> LoadFreeApartments()
         {
             List<Apartment> apartments = new List<Apartment>();

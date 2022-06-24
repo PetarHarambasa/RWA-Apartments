@@ -38,6 +38,7 @@ namespace MVC.Controllers
         {
             ViewBag.Apartman = Repo.LoadApartment(id);
             ViewBag.Tags = Repo.LoadApartmentTags(id);
+            ViewBag.ApartmentPicture = Repo.LoadApartmentPicture(id);
             var username = User.Identity.Name;
             User model = await AuthManager.FindByNameAsync(username);
             return View(model);

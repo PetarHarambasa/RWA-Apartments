@@ -27,10 +27,12 @@ namespace WebApplication
             {
                 Response.Redirect("Default.aspx");
             }
+
             AppendOwner();
             AppendStatus();
             AppendCity();
             AppendTags();
+
         }
         private void AppendCity()
         {
@@ -69,21 +71,19 @@ namespace WebApplication
         {
             if (Page.IsValid)
             {
-                Apartment a = new Apartment
-                {
-                    Name = txtName.Text,
-                    NameEng = txtNameEng.Text,
-                    OwnerId = ddlOwner.SelectedIndex + 1,
-                    TypeId = 999,
-                    StatusId = ddlStatus.SelectedIndex + 1,
-                    CityId = ddlCity.SelectedIndex + 1,
-                    Address = txtAddress.Text,
-                    Price = Decimal.Parse(txtPrice.Text),
-                    MaxAdults = Int32.Parse(txtMaxAdults.Text),
-                    MaxChildren = Int32.Parse(txtMaxChildren.Text),
-                    TotalRooms = Int32.Parse(txtTotalRooms.Text),
-                    BeachDistance = Int32.Parse(txtBeachDistance.Text),
-                };
+                Apartment a = new Apartment();
+                a.Name = txtName.Text;
+                a.NameEng = txtNameEng.Text;
+                a.OwnerId = ddlOwner.SelectedIndex + 1;
+                a.TypeId = 999;
+                a.StatusId = ddlStatus.SelectedIndex + 1;
+                a.CityId = ddlCity.SelectedIndex + 1;
+                a.Address = txtAddress.Text;
+                a.Price = Decimal.Parse(txtPrice.Text);
+                a.MaxAdults = Int32.Parse(txtMaxAdults.Text);
+                a.MaxChildren = Int32.Parse(txtMaxChildren.Text);
+                a.TotalRooms = Int32.Parse(txtTotalRooms.Text);
+                a.BeachDistance = Int32.Parse(txtBeachDistance.Text);
 
                 var apartmentId = ((IRepo)Application["database"]).AddApartment(a);
 

@@ -18,5 +18,12 @@ namespace MVC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error()
+        {
+            string err = Server.GetLastError().GetBaseException().Message;
+            err = err.Replace("\r", "").Replace("\n", "");
+            Response.Redirect("~/Error/Index?err=" + err);
+        }
     }
 }

@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+    string err = ViewBag.err as string;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <div class="mainContainer">
+        <h1>Dogodila se pogreška</h1>
+        <div class="alert alert-warning">
+            <p>@err</p>
+        </div>
+    </div>
+</body>
+</html>

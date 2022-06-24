@@ -164,12 +164,14 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\ApartmentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Apartment.cs" />
+    <Compile Include="Models\ApartmentPicture.cs" />
     <Compile Include="Models\Auth\DBContext.cs" />
     <Compile Include="Models\Auth\PasswordHasher.cs" />
     <Compile Include="Models\Auth\SignInManager.cs" />
@@ -221,6 +223,7 @@
     <Content Include="Views\Apartment\Details.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

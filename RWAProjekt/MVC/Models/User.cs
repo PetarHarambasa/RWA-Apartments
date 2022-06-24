@@ -24,7 +24,7 @@ namespace MVC.Models
         
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "username")]
+        [Display(Name = "Username")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Username ne smije biti prazan")]
         public string UserName { get; set; }
        

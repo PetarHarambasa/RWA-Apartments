@@ -11,15 +11,11 @@
     <link href="Content/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- CUSTOM CSS -->
-    <style>
-        fieldset { border: 1px solid #ced4da; padding: inherit; border-radius: 4px; } 
-        fieldset > legend { float: initial; width: auto; padding: revert; font-size: initial; margin: 0; }
-    </style>
+    <link href="Content/index.css" rel="stylesheet"/>
 </head>
 <body>
     <form id="form1" class="container text-center" runat="server">
         <h1>BAD REQUEST - Status code:400</h1>
-        <p>U zahtjevu nisu poslani svi parametri.</p>
     </form>
 </body>
 </html>
