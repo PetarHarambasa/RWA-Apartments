@@ -2,6 +2,7 @@
 using rwaLib.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -11,15 +12,19 @@ namespace WebApplication
 {
     public partial class Apartments : System.Web.UI.Page
     {
+        private const string PATH_IMAGE = "./assets/apartments/";
         private IList<Apartment> _listOfAllApartments;
         private IList<ApartmentOwner> _listOfAllApartmentOwners;
         private IList<ApartmentStatus> _listOfAllApartmentStatus;
         private IList<City> _listOfAllCity;
+        private IList<Tag> _listOfAllTags;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             _listOfAllApartmentOwners = ((IRepo)Application["database"]).LoadApartmentOwner();
             _listOfAllApartmentStatus = ((IRepo)Application["database"]).LoadApartmentStatus();
             _listOfAllCity = ((IRepo)Application["database"]).LoadCity();
+            _listOfAllTags = ((IRepo)Application["database"]).LoadTags();
             _listOfAllApartments = ((IRepo)Application["database"]).LoadApartments();
             lblResult.Visible = false;
 
@@ -33,6 +38,7 @@ namespace WebApplication
                 AppendOwner();
                 AppendStatus();
                 AppendCity();
+                AppendTags();
                 LoadData();
                 ShowApartments();
             }
@@ -50,6 +56,15 @@ namespace WebApplication
             ddlCity.DataValueField = "Id";
             ddlCity.DataTextField = "Name";
             ddlCity.DataBind();
+        }
+
+        private void AppendTags()
+        {
+            _listOfAllTags.ToList().ForEach(tag =>
+            {
+                ListItem tagItem = new ListItem(tag.Name, tag.Id.ToString());
+                cblTag.Items.Add(tagItem);
+            });
         }
 
         private void AppendStatus()
@@ -76,6 +91,12 @@ namespace WebApplication
             lbApartments.DataBind();
         }
 
+        private void ShowPictures(IList<ApartmentPicture> pictures)
+        {
+            repApartmentPictures.DataSource = pictures;
+            repApartmentPictures.DataBind();
+        }
+
         protected void updateApartment_Click(object sender, EventArgs e)
         {
             var apartmentId = int.Parse(lbApartments.SelectedValue);
@@ -95,6 +116,46 @@ namespace WebApplication
             selectedApartment.BeachDistance = Int32.Parse(txtBeachDistance.Text);
 
             ((IRepo)Application["database"]).SaveApartment(selectedApartment);
+            ((IRepo)Application["database"]).DeleteApartmentTagByApartmentId(selectedApartment.Id);
+
+            foreach (ListItem tagItem in cblTag.Items)
+            {
+                if (tagItem.Selected)
+                {
+                    ((IRepo)Application["database"]).AddApartmentTag(new TaggedApartment(apartmentId, Int32.Parse(tagItem.Value)));
+                }
+
+                tagItem.Selected = false;
+            }
+
+            if (fuUploadMain.HasFile)
+            {
+                string mainPicture = Path.GetFileName(fuUploadMain.PostedFile.FileName);
+                string mainPictureNameOnly = Path.GetFileNameWithoutExtension(fuUploadMain.PostedFile.FileName);
+                string mainDirtPath = PATH_IMAGE + mainPicture;
+                string mainFullPath = Server.MapPath(mainDirtPath);
+                string mainPictureBase64 = streamToBase64(fuUploadMain.PostedFile.InputStream);
+
+                fuUploadMain.SaveAs(mainFullPath);
+                ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, mainDirtPath, mainPictureBase64, mainPictureNameOnly, true));
+            }
+
+            if (fuUploadOther.HasFiles)
+            {
+                foreach (var file in fuUploadOther.PostedFiles)
+                {
+                    string picture = Path.GetFileName(file.FileName);
+                    string nameOnly = Path.GetFileNameWithoutExtension(file.FileName);
+                    string dirPath = PATH_IMAGE + picture;
+                    string fullPath = Server.MapPath(dirPath);
+                    string pictureBase64 = streamToBase64(file.InputStream);
+
+                    fuUploadOther.SaveAs(fullPath);
+
+                    ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, dirPath, pictureBase64, nameOnly, false));
+                }
+            }
+
             Refresh();
         }
 
@@ -103,10 +164,10 @@ namespace WebApplication
             _listOfAllApartments = ((IRepo)Application["database"]).LoadApartments();
             ShowApartments();
             LoadData();
-            ClearTxtFields();
+            ClearForm();
         }
 
-        private void ClearTxtFields()
+        private void ClearForm()
         {
             txtName.Text = "";
             txtNameEng.Text = "";
@@ -116,6 +177,22 @@ namespace WebApplication
             txtMaxChildren.Text = "";
             txtTotalRooms.Text = "";
             txtBeachDistance.Text = "";
+            repApartmentPictures.Dispose();
+            repApartmentPictures.DataBind();
+            fuUploadMain.Attributes.Clear();
+            fuUploadOther.Attributes.Clear();
+
+            foreach (ListItem tagItem in cblTag.Items)
+            {
+                tagItem.Selected = false;
+            }
+        }
+
+        private void SetImageValidators(IList<ApartmentPicture> pictures)
+        {
+            var mainImageExists = pictures.FirstOrDefault(image => image.IsRepresentative);
+            validatorUploadMain.Enabled = mainImageExists == null;
+            validatorUploadOther.Enabled = pictures.Count == 0;
         }
 
         protected void lbApartments_SelectedIndexChanged(object sender, EventArgs e)
@@ -125,6 +202,11 @@ namespace WebApplication
 
             if (selectedApartment != null)
             {
+                foreach (ListItem tagItem in cblTag.Items)
+                {
+                    var tagExists = selectedApartment.Tags.FirstOrDefault(tag => tag.Tag.Id == Int32.Parse(tagItem.Value));
+                    tagItem.Selected = tagExists != null;
+                }
 
                 ddlOwner.SelectedValue = selectedApartment.OwnerId.ToString();
                 ddlStatus.SelectedValue = selectedApartment.StatusId.ToString();
@@ -138,6 +220,9 @@ namespace WebApplication
                 txtMaxChildren.Text = selectedApartment.MaxChildren.ToString();
                 txtTotalRooms.Text = selectedApartment.TotalRooms.ToString();
                 txtBeachDistance.Text = selectedApartment.BeachDistance.ToString();
+
+                ShowPictures(selectedApartment.ApartmentPicture);
+                SetImageValidators(selectedApartment.ApartmentPicture);
             }
         }
 
@@ -148,6 +233,22 @@ namespace WebApplication
 
             ((IRepo)Application["database"]).DeleteApartment(selectedApartment);
             Refresh();
+        }
+
+        protected void deleteImage_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            var imageId = Int32.Parse(btn.CommandArgument);
+
+            ((IRepo)Application["database"]).DeleteApartmentImageById(imageId);
+            Refresh();
+        }
+
+        private string streamToBase64(Stream stream)
+        {
+            BinaryReader br = new BinaryReader(stream);
+            Byte[] bytes = br.ReadBytes((Int32)stream.Length);
+            return Convert.ToBase64String(bytes, 0, bytes.Length);
         }
     }
 }

@@ -25,6 +25,8 @@ namespace rwaLib.Dal
         void DeleteTag(Tag tag);
         void AddTag(Tag tag);
         void AddApartmentTag(TaggedApartment tagged);
+        void DeleteApartmentTagByApartmentId(int apartmentId);
+        void DeleteApartmentImageById(int id);
         void AddApartmentPicture(ApartmentPicture apartmentPicture);
     }
 }

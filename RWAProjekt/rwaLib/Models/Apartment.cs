@@ -12,9 +12,12 @@ namespace rwaLib.Models
         public int Id { get; set; }
         public DateTime DeletedAt { get; set; }
         public int OwnerId { get; set; }
+        public string OwnerName { get; set; }
         public int TypeId { get; set; }
         public int StatusId { get; set; }
+        public string Status { get; set; }
         public int CityId { get; set; }
+        public string City { get; set; }
         public string Address { get; set; }
         public string Name { get; set; }
         public string NameEng { get; set; }
@@ -23,6 +26,8 @@ namespace rwaLib.Models
         public int MaxChildren { get; set; }
         public int TotalRooms { get; set; }
         public int BeachDistance { get; set; }
+        public IList<TaggedApartment> Tags { get; set; }
+        public IList<ApartmentPicture> ApartmentPicture { get; set; }
 
         public Apartment()
         {

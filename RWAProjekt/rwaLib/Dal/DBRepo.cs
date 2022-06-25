@@ -89,19 +89,27 @@ namespace rwaLib.Dal
                     apartments.Add(
                         new Apartment
                         {
-                            Id = (int)row[nameof(Apartment.Id)],
-                            OwnerId = (int)row[nameof(Apartment.OwnerId)],
-                            TypeId = (int)row[nameof(Apartment.TypeId)],
-                            StatusId = (int)row[nameof(Apartment.StatusId)],
-                            CityId = (int)row[nameof(Apartment.CityId)],
-                            Address = row[nameof(Apartment.Address)].ToString(),
-                            Name = row[nameof(Apartment.Name)].ToString(),
-                            NameEng = row[nameof(Apartment.NameEng)].ToString(),
-                            Price = (decimal)row[nameof(Apartment.Price)],
-                            MaxAdults = (int)row[nameof(Apartment.MaxAdults)],
-                            MaxChildren = (int)row[nameof(Apartment.MaxChildren)],
-                            TotalRooms = (int)row[nameof(Apartment.TotalRooms)],
-                            BeachDistance = (int)row[nameof(Apartment.BeachDistance)],
+                            Id = (int)row["apartId"],
+                            Address = row["apartAddress"].ToString(),
+                            Name = row["apartName"].ToString(),
+                            NameEng = row["apartNameEng"].ToString(),
+                            Price = Math.Round((decimal)row["apartPrice"], 2),
+                            MaxAdults = (int)row["apartMaxAdults"],
+                            MaxChildren = (int)row["apartMaxChildren"],
+                            TotalRooms = (int)row["apartTotalRooms"],
+                            BeachDistance = (int)row["apartBeachDistance"],
+
+                            OwnerId = (int)row["ownerId"],
+                            OwnerName = row["ownerName"].ToString(),
+
+                            StatusId = (int)row["statusId"],
+                            Status = row["statusName"].ToString(),
+
+                            CityId = (int)row["cityId"],
+                            City = row["cityName"].ToString(),
+
+                            Tags = LoadTaggedApartmentByApartmentId((int)row["apartId"]),
+                            ApartmentPicture = LoadApartmentPictureByApartmentId((int)row["apartId"])
                         });
             }
             return apartments;
@@ -194,6 +202,46 @@ namespace rwaLib.Dal
             return tags;
         }
 
+        public IList<TaggedApartment> LoadTaggedApartmentByApartmentId(int apartmentId)
+        {
+            IList<TaggedApartment> taggedApartments = new List<TaggedApartment>();
+            var tblTaggedApartment = SqlHelper.ExecuteDataset(CS, nameof(LoadTaggedApartmentByApartmentId), apartmentId).Tables[0];
+            foreach (DataRow row in tblTaggedApartment.Rows)
+            {
+                taggedApartments.Add(
+                    new TaggedApartment
+                    {
+                        Id = (int)row["taggedApartId"],
+                        Tag = new Tag
+                        {
+                            Id = (int)row["tagId"],
+                            Name = row["tagName"].ToString()
+                        }
+                    });
+            }
+
+            return taggedApartments;
+        }
+
+        public IList<ApartmentPicture> LoadApartmentPictureByApartmentId(int apartmentId)
+        {
+            IList<ApartmentPicture> apartmentPictures = new List<ApartmentPicture>();
+            var tblTaggedApartment = SqlHelper.ExecuteDataset(CS, nameof(LoadApartmentPictureByApartmentId), apartmentId).Tables[0];
+            foreach (DataRow row in tblTaggedApartment.Rows)
+            {
+                apartmentPictures.Add(
+                    new ApartmentPicture
+                    {
+                        Id = (int)row[nameof(ApartmentPicture.Id)],
+                        Name = row[nameof(ApartmentPicture.Name)].ToString(),
+                        Path = row[nameof(ApartmentPicture.Path)].ToString(),
+                        IsRepresentative = (bool)row[nameof(ApartmentPicture.IsRepresentative)],
+                    });
+            }
+
+            return apartmentPictures;
+        }
+
         public IList<TagType> LoadTagTypes()
         {
             IList<TagType> tagTypes = new List<TagType>();
@@ -230,6 +278,16 @@ namespace rwaLib.Dal
         public void AddApartmentTag(TaggedApartment tagged)
         {
             SqlHelper.ExecuteNonQuery(CS, nameof(AddApartmentTag), tagged.ApartmentId, tagged.TagId);
+        }
+
+        public void DeleteApartmentTagByApartmentId(int apartmentId)
+        {
+            SqlHelper.ExecuteNonQuery(CS, nameof(DeleteApartmentTagByApartmentId), apartmentId);
+        }
+
+        public void DeleteApartmentImageById(int id)
+        {
+            SqlHelper.ExecuteNonQuery(CS, nameof(DeleteApartmentImageById), id);
         }
 
         public void AddApartmentPicture(ApartmentPicture apartmentPicture)

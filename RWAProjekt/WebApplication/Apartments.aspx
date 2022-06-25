@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <asp:Repeater ID="rptApartments" runat="server">
                     <HeaderTemplate>
-                        <table id="myTable" class="table">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -25,18 +25,18 @@
                                     <th scope="col">BeachDistance</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="table_apartments">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <tr>
                             <th scope="row"><%# Eval(nameof(rwaLib.Models.Apartment.Id)) %></th>
-                            <td><%# Eval(nameof(rwaLib.Models.Apartment.OwnerId)) %></td>
-                            <td><%# Eval(nameof(rwaLib.Models.Apartment.StatusId)) %></td>
-                            <td><%# Eval(nameof(rwaLib.Models.Apartment.CityId)) %></td>
+                            <td><%# Eval(nameof(rwaLib.Models.Apartment.OwnerName)) %></td>
+                            <td><%# Eval(nameof(rwaLib.Models.Apartment.Status)) %></td>
+                            <td><%# Eval(nameof(rwaLib.Models.Apartment.City)) %></td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.Name)) %></td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.NameEng)) %></td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.Address)) %></td>
-                            <td><%# Eval(nameof(rwaLib.Models.Apartment.Price)) %></td>
+                            <td><%# Eval(nameof(rwaLib.Models.Apartment.Price)) %> HRK</td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.MaxAdults)) %></td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.MaxChildren)) %></td>
                             <td><%# Eval(nameof(rwaLib.Models.Apartment.TotalRooms)) %></td>
@@ -61,6 +61,37 @@
                             ID="lbApartments"
                             CssClass="form-control"
                             AutoPostBack="true" OnSelectedIndexChanged="lbApartments_SelectedIndexChanged" />
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <fieldset class="p-4">
+                        <legend>Apartment image gallery</legend>
+                        <asp:Repeater ID="repApartmentPictures" runat="server">
+                            <ItemTemplate>
+                                <div class="form-group">
+                                    <div class="card mt-4">
+                                      <asp:Image ID="imgApartmentPicture" runat="server" CssClass="card-img-top" ImageUrl='<%# Eval("Path")  %>' />
+                                      <div class="card-body">
+                                          <h5 class="card-title"><%# Eval("Name")  %></h5>
+                                          <h6 class="card-subtitle mb-2 text-muted">
+                                               <%# (bool)Eval("IsRepresentative") ?
+                                                       "<span class='badge badge-pill bg-primary'>Primary image</span>" :
+                                                       "" %>
+                                          </h6>
+                                          <asp:Button 
+                                              ID="deleteImage" 
+                                              class="btn btn-danger float-end" 
+                                              runat="server"
+                                              CausesValidation="False"
+                                              CommandArgument='<%#Eval("Id")%>' 
+                                              Text="Delete image"
+                                              OnClick="deleteImage_Click" 
+                                              />
+                                      </div
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </fieldset>
                 </div>
             </div>
@@ -96,6 +127,10 @@
                         <asp:DropDownList ID="ddlCity" class="form-select" runat="server"></asp:DropDownList>
                     </div>
                     <div class="mb-3">
+                        <asp:Label ID="lblTag" for="cblTag" class="form-label" runat="server" Text="Tag"></asp:Label>
+                        <asp:CheckBoxList ID="cblTag" class="form-select table_tag" runat="server"></asp:CheckBoxList>
+                    </div>
+                    <div class="mb-3">
                         <asp:Label ID="lblPrice" for="txtPrice" class="form-label" runat="server" Text="Price"></asp:Label>
                         <asp:TextBox ID="txtPrice" class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPrice" Display="Dynamic" ForeColor="Red">Niste upisali cijenu</asp:RequiredFieldValidator>
@@ -120,6 +155,16 @@
                         <asp:TextBox ID="txtBeachDistance" class="form-control" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="txtBeachDistance" Display="Dynamic" ForeColor="Red">Niste upisali udaljenost od plaže</asp:RequiredFieldValidator>
                     </div>
+                    <div class="mb-3">
+                        <asp:Label for="fuUploadMain" class="form-label" runat="server">Representative image</asp:Label>
+                        <asp:FileUpload ID="fuUploadMain" runat="server" class="form-control" />
+                        <asp:RequiredFieldValidator ID="validatorUploadMain" runat="server" ControlToValidate="fuUploadMain" Display="Dynamic" ForeColor="Red">Niste uploadli sliku</asp:RequiredFieldValidator>
+                   </div>
+                    <div class="mb-3">
+                        <asp:Label for="fuUploadOther" class="form-label" runat="server">Other images</asp:Label>
+                        <asp:FileUpload ID="fuUploadOther" multiple="multiple" runat="server" class="form-control" />
+                        <asp:RequiredFieldValidator ID="validatorUploadOther" runat="server" ControlToValidate="fuUploadOther" Display="Dynamic" ForeColor="Red">Niste uplodali jos neku sliku</asp:RequiredFieldValidator>
+                     </div>
                     <asp:Button ID="updateApartment" class="btn btn-primary" runat="server" Text="Update" OnClick="updateApartment_Click" />
                     <asp:Button ID="deleteApartment" class="btn btn-danger" runat="server" Text="Delete" OnClick="deleteApartment_Click" />
                 </fieldset>

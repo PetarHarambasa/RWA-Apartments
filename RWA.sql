@@ -109,7 +109,28 @@ GO
 CREATE PROCEDURE LoadApartments
 AS
 BEGIN
-	SELECT * FROM [dbo].[Apartment] WHERE DeletedAt IS NULL
+	SELECT 
+		apart.Id as apartId, 
+		apart.Address as apartAddress, 
+		apart.Name as apartName,
+		apart.NameEng as apartNameEng,
+		apart.Price as apartPrice,
+		apart.MaxAdults as apartMaxAdults,
+		apart.MaxChildren as apartMaxChildren,
+		apart.TotalRooms as apartTotalRooms,
+		apart.BeachDistance as apartBeachDistance,
+		apartO.Id as ownerId,
+		apartO.Name as ownerName,
+		apartS.Id as statusId,
+		apartS.Name as statusName,
+		apartS.NameEng as statusNameEng,
+		city.Id as cityId,
+		city.Name as cityName
+	FROM [dbo].[Apartment] AS apart
+	INNER JOIN ApartmentOwner as apartO ON apart.OwnerId = apartO.Id
+	INNER JOIN ApartmentStatus as apartS ON apart.StatusId = apartS.Id
+	INNER JOIN City	as city ON apart.CityId = city.id
+	WHERE apart.DeletedAt IS NULL
 END
 GO
 
@@ -178,6 +199,14 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE DeleteApartmentTagByApartmentId
+	@apartmentId INT
+AS
+BEGIN
+	DELETE FROM TaggedApartment WHERE ApartmentId = @apartmentId
+END
+GO
+
 -- PROC: LoadTagTypes
 CREATE PROCEDURE LoadTagTypes
 AS
@@ -203,6 +232,7 @@ CREATE PROCEDURE DeleteTag
 	@tagID INT
 AS
 BEGIN
+	DELETE FROM TaggedApartment WHERE TagId=@tagID
 	DELETE FROM [dbo].[Tag] WHERE Id=@tagID
 END
 GO
@@ -239,5 +269,39 @@ CREATE PROCEDURE LoadApartmentPicture
 AS
 BEGIN
 	SELECT * FROM ApartmentPicture WHERE ApartmentId=@apartmentId
+END
+GO
+
+--PROCS: LoadTaggedApartmentByApartmentId
+CREATE PROCEDURE LoadTaggedApartmentByApartmentId
+	@apartmentId INT
+AS
+BEGIN
+	SELECT 
+		taggedApart.Id as taggedApartId,
+		tag.Id as tagId,
+		tag.Name as tagName
+	FROM TaggedApartment as taggedApart
+	INNER JOIN Tag as tag ON taggedApart.TagId = tag.Id
+	WHERE taggedApart.ApartmentId = @apartmentId
+END
+GO
+
+--PROC: LoadApartmentPictureByApartmentId
+CREATE PROCEDURE LoadApartmentPictureByApartmentId
+	@apartmentId INT
+AS
+BEGIN
+	SELECT Id, Name, Path, IsRepresentative
+	FROM ApartmentPicture WHERE
+	ApartmentId = @apartmentId and DeletedAt IS NULL AND Name IS NOT NULL AND Path IS NOT NULL AND Base64Content IS NOT NULL
+END
+GO
+
+CREATE PROCEDURE DeleteApartmentImageById
+	@id INT
+AS
+BEGIN
+	UPDATE ApartmentPicture SET DeletedAt = GETDATE() WHERE Id = @id
 END
 GO

@@ -101,22 +101,24 @@ namespace WebApplication
 
                     string mainPicture = Path.GetFileName(fuUploadMain.PostedFile.FileName);
                     string mainPictureNameOnly = Path.GetFileNameWithoutExtension(fuUploadMain.PostedFile.FileName);
-                    string mainFullPath = Server.MapPath(PATH_IMAGE + mainPicture);
+                    string mainDirtPath = PATH_IMAGE + mainPicture;
+                    string mainFullPath = Server.MapPath(mainDirtPath);
                     string mainPictureBase64 = streamToBase64(fuUploadMain.PostedFile.InputStream);
 
                     fuUploadMain.SaveAs(mainFullPath);
-                    ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, mainFullPath, mainPictureBase64, mainPictureNameOnly, true));
+                    ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, mainDirtPath, mainPictureBase64, mainPictureNameOnly, true));
 
                     foreach (var file in fuUploadOther.PostedFiles)
                     {
                         string picture = Path.GetFileName(file.FileName);
                         string nameOnly = Path.GetFileNameWithoutExtension(file.FileName);
-                        string fullPath = Server.MapPath(PATH_IMAGE + picture);
+                        string dirPath = PATH_IMAGE + picture;
+                        string fullPath = Server.MapPath(dirPath);
                         string pictureBase64 = streamToBase64(file.InputStream);
 
                         fuUploadOther.SaveAs(fullPath);
 
-                        ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, fullPath, pictureBase64, nameOnly, false));
+                        ((IRepo)Application["database"]).AddApartmentPicture(new ApartmentPicture(apartmentId, dirPath, pictureBase64, nameOnly, false));
                     }
 
                     fuUploadMain.Attributes.Clear();

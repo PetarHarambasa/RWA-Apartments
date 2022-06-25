@@ -26,3 +26,7 @@
     height: 250px;
     overflow-y: scroll;
 }
+
+.table_apartments {
+    font-size: 14px;
+}
