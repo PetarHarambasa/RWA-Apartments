@@ -105,9 +105,9 @@ namespace WebApplication
             selectedApartment.Name = txtName.Text;
             selectedApartment.NameEng = txtNameEng.Text;
             selectedApartment.Address = txtAddress.Text;
-            selectedApartment.OwnerId = ddlOwner.SelectedIndex + 1;
-            selectedApartment.StatusId = ddlStatus.SelectedIndex + 1;
-            selectedApartment.CityId = ddlCity.SelectedIndex + 1;
+            selectedApartment.OwnerId = Int32.Parse(ddlOwner.SelectedItem.Value);
+            selectedApartment.StatusId = Int32.Parse(ddlStatus.SelectedItem.Value);
+            selectedApartment.CityId = Int32.Parse(ddlCity.SelectedItem.Value);
             selectedApartment.Address = txtAddress.Text;
             selectedApartment.Price = Decimal.Parse(txtPrice.Text);
             selectedApartment.MaxAdults = Int32.Parse(txtMaxAdults.Text);

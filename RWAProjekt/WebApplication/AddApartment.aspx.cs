@@ -28,11 +28,13 @@ namespace WebApplication
                 Response.Redirect("Default.aspx");
             }
 
-            AppendOwner();
-            AppendStatus();
-            AppendCity();
-            AppendTags();
-
+            if (!Page.IsPostBack)
+            {
+                AppendOwner();
+                AppendStatus();
+                AppendCity();
+                AppendTags();
+            }
         }
         private void AppendCity()
         {
@@ -74,10 +76,10 @@ namespace WebApplication
                 Apartment a = new Apartment();
                 a.Name = txtName.Text;
                 a.NameEng = txtNameEng.Text;
-                a.OwnerId = ddlOwner.SelectedIndex + 1;
+                a.OwnerId = Int32.Parse(ddlOwner.SelectedItem.Value);
                 a.TypeId = 999;
-                a.StatusId = ddlStatus.SelectedIndex + 1;
-                a.CityId = ddlCity.SelectedIndex + 1;
+                a.StatusId = Int32.Parse(ddlStatus.SelectedItem.Value);
+                a.CityId = Int32.Parse(ddlCity.SelectedItem.Value);
                 a.Address = txtAddress.Text;
                 a.Price = Decimal.Parse(txtPrice.Text);
                 a.MaxAdults = Int32.Parse(txtMaxAdults.Text);
