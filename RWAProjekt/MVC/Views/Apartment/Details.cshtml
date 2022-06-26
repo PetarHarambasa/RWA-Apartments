@@ -25,10 +25,13 @@
     </div>
     <div class="container px-0">
         <h2>Pictures of an Apartment</h2>
-        
+
         @for (int i = 0; i < apartmentPictures.Count; i++)
         {
-            <img alt="" src="@apartmentPictures[i].Path" style="height:200px;width:200px;" />
+            string pic = apartmentPictures[i].Path;
+            <a href="@pic.Remove(0,1)" data-lightbox="images">
+            <img src="@pic.Remove(0,1)" style="height: 300px; width: 550px;" />
+            </a>
         }
     </div>
     <div class="container px-0">

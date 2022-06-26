@@ -11,12 +11,14 @@ namespace MVC.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content").Include(
-                 "~/Content/bootstrap.min.css"
+                 "~/Content/bootstrap.min.css",
+                 "~/Content/lightbox.css"
              ));
 
             bundles.Add(new ScriptBundle("~/Scripts").Include(
                 "~/Scripts/jquery-3.6.0.js",
-                "~/Scripts/bootstrap.js"
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/lightbox-2.6.js"
             ));
         }
     }

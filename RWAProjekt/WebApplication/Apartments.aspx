@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <asp:Repeater ID="rptApartments" runat="server">
                     <HeaderTemplate>
-                        <table class="table">
+                        <table class="table" id="table_of_apartments">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

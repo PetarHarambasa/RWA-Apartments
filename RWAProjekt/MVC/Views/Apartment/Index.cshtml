@@ -3,12 +3,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LoggedIn.cshtml";
 }
+
+
 @using (Html.BeginForm())
 {
+
+    <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
     <div class="container">
         <h2>Apartments List</h2>
 
-        <table class="table table-striped table-condensed">
+        <table class="table table-striped table-condensed" id="table_of_apartments">
             <tr>
                 <th>
                     #
@@ -55,7 +59,7 @@
                         @Html.DisplayFor(modelItem => apartment.Id)
                     </td>
                     <td>
-                        @Html.Action("GetNameOwner", new { id = apartment.OwnerId})
+                        @Html.Action("GetNameOwner", new { id = apartment.OwnerId })
                     </td>
                     <td>
                         @Html.Action("GetNameStatus", new { id = apartment.StatusId })
@@ -94,4 +98,12 @@
             }
         </table>
     </div>
+
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table_of_apartments').DataTable();
+        });
+    </script>
 }

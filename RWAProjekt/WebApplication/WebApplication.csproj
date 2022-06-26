@@ -73,6 +73,14 @@
     <Content Include="AddTag.aspx" />
     <Content Include="Apartments.aspx" />
     <Content Include="App_UserControls\LoginControl.ascx" />
+    <Content Include="assets\apartments\black.jpg" />
+    <Content Include="assets\apartments\erabor.jpg" />
+    <Content Include="assets\apartments\gogeta.jpg" />
+    <Content Include="assets\apartments\gokzjpg.jpg" />
+    <Content Include="assets\apartments\maointina3.jpg" />
+    <Content Include="assets\apartments\mountain2.jpg" />
+    <Content Include="assets\apartments\Rengoku.jpg" />
+    <Content Include="assets\apartments\voli.jpg" />
     <Content Include="assets\navbar\logo.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
