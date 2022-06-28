@@ -52,6 +52,24 @@ namespace MVC.Models
             return apartmentPictures;
         }
 
+        public static void AddApartmentReservation(int apartmentId, User u) 
+            => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReservation), apartmentId, u.Id, u.UserName, u.Email, u.PhoneNumber, u.Address);
+
+        public static User LoadUser(int userId)
+        {
+            ds = SqlHelper.ExecuteDataset(cs, nameof(LoadUser), userId);
+            DataRow row = ds.Tables[0].Rows[0];
+
+            User u = new User();
+            u.Id = row[nameof(User.Id)].ToString();
+            u.Email = row[nameof(User.Email)].ToString();
+            u.PhoneNumber = row[nameof(User.PhoneNumber)].ToString();
+            u.UserName = row[nameof(User.UserName)].ToString();
+            u.Address = row[nameof(User.Address)].ToString();
+
+            return u;
+        }
+
         public static List<Apartment> LoadFreeApartments()
         {
             List<Apartment> apartments = new List<Apartment>();

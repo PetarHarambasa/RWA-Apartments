@@ -48,26 +48,26 @@
     <div class="container px-0">
         <div class="mb-3">
             @Html.LabelFor(model => model.UserName)
-            @Html.TextBox("username", value: @Model.UserName, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBox("username", value: @Model.UserName, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => model.Email)
-            @Html.TextBox("email", value: @Model.Email, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBox("email", value: @Model.Email, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => model.PhoneNumber)
-            @Html.TextBox("phoneNumber", value: @Model.PhoneNumber, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBox("phoneNumber", value: @Model.PhoneNumber, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => model.Address)
-            @Html.TextBox("address", value: @Model.Address, htmlAttributes: new { @class = "form-control" })
+            @Html.TextBox("address", value: @Model.Address, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
         </div>
         <div>
-            <input type="submit" value="Book" class="btn btn-primary" />
+            @Html.ActionLink("Book", "Booked", new { apartmentId = a.Id, userId = Model.Id}, new { @class = "btn btn-primary btn-sm" })
         </div>
     </div>
 </div>

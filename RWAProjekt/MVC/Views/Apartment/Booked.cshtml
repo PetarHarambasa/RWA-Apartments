@@ -1,0 +1,12 @@
+﻿@using MVC.Models
+@model Apartment
+
+@{
+    ViewBag.Title = "Booked";
+    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+    User user = ViewBag.User as User;
+}
+
+<h2>Congratulations @user.UserName 🥳🥳</h2>
+<h2>You have successfully booked apartment @Model.Name</h2>
+

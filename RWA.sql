@@ -150,6 +150,15 @@ BEGIN
 END
 GO
 
+-- PROC: LoadUser
+CREATE PROCEDURE LoadUser
+	@userId INT
+AS
+BEGIN
+	SELECT * FROM [dbo].[AspNetUsers] WHERE Id = @userId
+END
+GO
+
 -- PROC: LoadApartmentOwner
 CREATE PROCEDURE LoadApartmentOwner
 AS
@@ -298,10 +307,26 @@ BEGIN
 END
 GO
 
+--PROC: DeleteApartmentImageById
 CREATE PROCEDURE DeleteApartmentImageById
 	@id INT
 AS
 BEGIN
 	UPDATE ApartmentPicture SET DeletedAt = GETDATE() WHERE Id = @id
+END
+GO
+
+--PROC: AddApartmentReservation
+CREATE PROCEDURE AddApartmentReservation
+	@apartmentId int,
+	@userId int,
+	@userName nvarchar(255),
+	@userEmail nvarchar(255),
+	@userPhoneNumber nvarchar(255),
+	@userAddress nvarchar(255)
+AS
+BEGIN
+INSERT INTO ApartmentReservation(ApartmentId, UserId, UserName, UserEmail, UserPhone, UserAddress) 
+VALUES (@apartmentId, @userId, @userName, @userEmail, @userPhoneNumber, @userAddress)
 END
 GO

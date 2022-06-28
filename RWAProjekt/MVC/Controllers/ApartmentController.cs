@@ -44,6 +44,16 @@ namespace MVC.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public  ActionResult Booked(int apartmentId, int userId, string reservationDetails)
+        {
+            Apartment model = Repo.LoadApartment(apartmentId);
+            ViewBag.User = Repo.LoadUser(userId);
+            User u = Repo.LoadUser(userId);
+            Repo.AddApartmentReservation(apartmentId, u);
+            return View(model);
+        }
+
         [ChildActionOnly]
         public ActionResult GetNameOwner(int id)
         {
