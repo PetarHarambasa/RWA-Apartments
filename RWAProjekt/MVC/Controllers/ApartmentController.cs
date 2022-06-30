@@ -44,14 +44,14 @@ namespace MVC.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public  ActionResult Booked(int apartmentId, int userId, string reservationDetails)
+        public ActionResult Booked(string apartmentReservationDetails,int apartmentId, int userId)
         {
-            Apartment model = Repo.LoadApartment(apartmentId);
-            ViewBag.User = Repo.LoadUser(userId);
+            Apartment apartment = Repo.LoadApartment(apartmentId);
             User u = Repo.LoadUser(userId);
+            u.ApartmentReservationDetails = apartmentReservationDetails;
+            ViewBag.User = u;
             Repo.AddApartmentReservation(apartmentId, u);
-            return View(model);
+            return View(apartment);
         }
 
         [ChildActionOnly]

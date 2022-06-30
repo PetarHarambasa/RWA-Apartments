@@ -53,7 +53,7 @@ namespace MVC.Models
         }
 
         public static void AddApartmentReservation(int apartmentId, User u) 
-            => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReservation), apartmentId, u.Id, u.UserName, u.Email, u.PhoneNumber, u.Address);
+            => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReservation), apartmentId, u.ApartmentReservationDetails,u.Id, u.UserName, u.Email, u.PhoneNumber, u.Address);
 
         public static User LoadUser(int userId)
         {

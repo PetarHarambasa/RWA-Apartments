@@ -35,6 +35,9 @@ namespace MVC.Models
 
         public DateTime UpdatedTime { get; set; }
 
+        [Display(Name = "Details")]
+        public string ApartmentReservationDetails { get; set; }
+
         public User()
         {
             

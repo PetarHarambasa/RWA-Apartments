@@ -319,6 +319,7 @@ GO
 --PROC: AddApartmentReservation
 CREATE PROCEDURE AddApartmentReservation
 	@apartmentId int,
+	@details nvarchar(255),
 	@userId int,
 	@userName nvarchar(255),
 	@userEmail nvarchar(255),
@@ -326,7 +327,7 @@ CREATE PROCEDURE AddApartmentReservation
 	@userAddress nvarchar(255)
 AS
 BEGIN
-INSERT INTO ApartmentReservation(ApartmentId, UserId, UserName, UserEmail, UserPhone, UserAddress) 
-VALUES (@apartmentId, @userId, @userName, @userEmail, @userPhoneNumber, @userAddress)
+INSERT INTO ApartmentReservation(ApartmentId, Details,UserId, UserName, UserEmail, UserPhone, UserAddress) 
+VALUES (@apartmentId, @details,@userId, @userName, @userEmail, @userPhoneNumber, @userAddress)
 END
 GO
