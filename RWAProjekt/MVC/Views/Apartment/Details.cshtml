@@ -46,41 +46,40 @@
     <h2>Contact</h2>
     @using (Html.BeginForm("Booked", "Apartment", null, FormMethod.Post, new { role = "form" }))
     {
-<div class="container px-0">
-    <div class="mb-3">
-        @Html.LabelFor(model => model.UserName)
-        @Html.TextBox("username", value: @Model.UserName, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Email)
-        @Html.TextBox("email", value: @Model.Email, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(model => model.PhoneNumber)
-        @Html.TextBox("phoneNumber", value: @Model.PhoneNumber, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Address)
-        @Html.TextBox("address", value: @Model.Address, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
-        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(model => model.ApartmentReservationDetails)
-        @Html.EditorFor(model => model.ApartmentReservationDetails, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="mb-3">
-        @Html.TextBox("apartmentId", value: a.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
-    </div>
-    <div class="mb-3">
-        @Html.TextBox("userId", value: Model.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary">Book</button>
-        @*@Html.ActionLink("Book", "Booked", new { apartmentId = a.Id, userId = Model.Id, apartmentReservationDetails = Model.ApartmentReservationDetails }, new { @class = "btn btn-primary btn-sm" })*@
-    </div>
-</div>
+        <div class="container px-0">
+            <div class="mb-3">
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBox("username", value: @Model.UserName, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Email)
+                @Html.TextBox("email", value: @Model.Email, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.PhoneNumber)
+                @Html.TextBox("phoneNumber", value: @Model.PhoneNumber, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Address)
+                @Html.TextBox("address", value: @Model.Address, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.ApartmentReservationDetails)
+                @Html.EditorFor(model => model.ApartmentReservationDetails, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="mb-3">
+                @Html.TextBox("apartmentId", value: a.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
+            </div>
+            <div class="mb-3">
+                @Html.TextBox("userId", value: Model.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Book</button>
+            </div>
+        </div>
     }
 </div>

@@ -54,6 +54,22 @@ namespace MVC.Controllers
             return View(apartment);
         }
 
+        [HttpPost]
+        public void PostReview(int apartmentId, int userId, string details, int star)
+        {
+            ApartmentReview apartmentReview = new ApartmentReview();
+            apartmentReview.ApartmentId = apartmentId;
+            apartmentReview.UserId = userId;
+            apartmentReview.Details = details;
+            apartmentReview.RatingStars = star;
+            Repo.AddApartmentReview(apartmentReview);
+        }
+
+        public ActionResult ThankYou()
+        {
+            return View();
+        }
+
         [ChildActionOnly]
         public ActionResult GetNameOwner(int id)
         {

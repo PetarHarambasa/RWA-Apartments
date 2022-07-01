@@ -331,3 +331,16 @@ INSERT INTO ApartmentReservation(ApartmentId, Details,UserId, UserName, UserEmai
 VALUES (@apartmentId, @details,@userId, @userName, @userEmail, @userPhoneNumber, @userAddress)
 END
 GO
+
+--PROC: AddApartmentReview
+CREATE PROCEDURE AddApartmentReview
+	@apartmentId int,
+	@userId int,
+	@details nvarchar(255),
+	@star int
+AS
+BEGIN
+INSERT INTO ApartmentReview(ApartmentId, UserId, Details, Stars) 
+VALUES (@apartmentId, @userId, @details, @star)
+END
+GO

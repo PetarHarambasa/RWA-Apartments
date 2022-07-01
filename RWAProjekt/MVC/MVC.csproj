@@ -317,6 +317,7 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\lightbox.css" />
+    <Content Include="Content\starability-basic.css" />
     <Content Include="Global.asax" />
     <Content Include="img\close.png" />
     <Content Include="img\loading.gif" />
@@ -426,6 +427,7 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApartmentController.cs" />
+    <Compile Include="Controllers\api\ApartmentReviewController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -435,6 +437,7 @@
     </Compile>
     <Compile Include="Models\Apartment.cs" />
     <Compile Include="Models\ApartmentPicture.cs" />
+    <Compile Include="Models\ApartmentReview.cs" />
     <Compile Include="Models\Auth\DBContext.cs" />
     <Compile Include="Models\Auth\PasswordHasher.cs" />
     <Compile Include="Models\Auth\SignInManager.cs" />
@@ -490,6 +493,7 @@
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Apartment\Booked.cshtml" />
+    <Content Include="Views\Apartment\ThankYou.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

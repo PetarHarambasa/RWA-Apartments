@@ -7,7 +7,64 @@
     User user = ViewBag.User as User;
 }
 
-<h2>Congratulations @user.UserName 🥳🥳</h2>
-<h2>You have successfully booked apartment @Model.Name</h2>
-<h2>Your reservation is booked for @user.ApartmentReservationDetails</h2>
+<link rel="stylesheet" href="~/Content/starability-basic.css" />
 
+<div class="container">
+    <h2>Congratulations @user.UserName 🥳🥳</h2>
+    <h2>You have successfully booked apartment @Model.Name</h2>
+    <h2>Your reservation is booked for @user.ApartmentReservationDetails</h2>
+
+    <div class="container px-0 py-5">
+        <h2>Give this apartment your review and rating</h2>
+        <div class="mb-3">
+            @Html.TextBox("apartmentId", value: Model.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
+        </div>
+        <div class="mb-3">
+            @Html.TextBox("userId", value: user.Id, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @type = "hidden" })
+        </div>
+        <div class="mb-3">
+            <label>Write your review about apartment</label>
+            <input type="text" id="details" class="form-control" />
+        </div>
+        <fieldset class="starability-basic" id="rates">
+            <legend>Rate:</legend>
+            <input type="radio" id="first-rate1" name="rating" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="rating" value="2" />
+            <label for="first-rate2" title="not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="rating" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="rating" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="rating" py-3" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+            <button class="btnRate btn btn-primary my-3">Post</button>
+        </fieldset>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function Post() {
+            $(".btnRate").click(function () {
+                var value = $("input[type=radio][name=rating]:checked").val();
+                $.ajax({
+                        method: "POST",
+                        url: "@Url.Action(actionName: "PostReview", controllerName: "Apartment")",
+                        data: {
+                            ApartmentId: $("#apartmentId").val(),
+                            UserId: $("#userId").val(),
+                            Details: $("#details").val(),
+                            Star: value
+                        },
+                    success: function () {
+                        window.location.href = 'ThankYou';
+                    },
+                    error: function () {
+                        console.log('Something went wrong')
+                    }
+                });
+            });
+        });
+    </script>
+}

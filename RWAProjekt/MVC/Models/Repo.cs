@@ -31,6 +31,9 @@ namespace MVC.Models
             return apartmentTags;
         }
 
+        public static void AddApartmentReview(ApartmentReview ar) => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReview), ar.ApartmentId, ar.UserId, ar.Details, ar.RatingStars);
+
+
         public static List<ApartmentPicture> LoadApartmentPicture(int id)
         {
             List<ApartmentPicture> apartmentPictures = new List<ApartmentPicture>();
