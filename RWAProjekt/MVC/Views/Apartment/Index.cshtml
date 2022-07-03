@@ -5,102 +5,52 @@
     Layout = "~/Views/Shared/_LoggedIn.cshtml";
 }
 
-<div class="container">
+<div class="row">
     <h2>Apartments List</h2>
 
-    <table id="table_of_apartments" class="table table-condensed">
-        <thead>
-            <tr>
-                <th>
-                    Owner
-                    @*@Html.DisplayNameFor(model => model.OwnerId)*@
-                </th>
-                <th>
-                    Status
-                    @*@Html.DisplayNameFor(model => model.StatusId)*@
-                </th>
-                <th>
-                    City
-                    @*@Html.DisplayNameFor(model => model.CityId)*@
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NameEng)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaxAdults)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaxChildren)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TotalRooms)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BeachDistance)
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var apartment in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.Action("GetNameOwner", new { id = apartment.OwnerId })
-                    </td>
-                    <td>
-                        @Html.Action("GetNameStatus", new { id = apartment.StatusId })
-                    </td>
-                    <td>
-                        @Html.Action("GetNameCity", new { id = apartment.CityId })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.NameEng)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.MaxAdults)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.MaxChildren)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.TotalRooms)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => apartment.BeachDistance)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = apartment.Id }, new { @class = "btn btn-primary btn-sm" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <input id="myInput" type="text" placeholder="Search by anyting...">
+
+    @foreach (var apartment in Model)
+    {
+        ApartmentPicture apartmentPic = Repo.LoadApartmentRepresentativePicture(apartment.Id);
+        <div class="card m-5 serachAll" style="width: 20.5rem;">
+            <img class="card-img-top" src="@apartmentPic.Path.Remove(0,1)">
+            <div class="card-body">
+                <h5 class="card-title">@apartment.Name</h5>
+                <p class="card-text">
+                    Address: @apartment.Address
+                </p>
+                <p class="card-text">
+                    Max adults: @apartment.MaxAdults
+                </p>
+                <p class="card-text">
+                    Max children: @apartment.MaxChildren
+                </p>
+                <p class="card-text">
+                    Price : @apartment.Price kn
+                </p>
+                <p class="card-text">
+                    Total rooms number: @apartment.TotalRooms
+                </p>
+                <p class="card-text">
+                    Beach distance: @apartment.BeachDistance m
+                </p>
+                @Html.ActionLink("Details", "Details", new { id = apartment.Id }, new { @class = "btn btn-primary btn-sm" })
+            </div>
+        </div>
+    }
 </div>
 
-@section Scripts{
-    <script type="text/javascript">
+@section scripts
+{
+    <script>
         $(document).ready(function () {
-            $('#table_of_apartments').DataTable();
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".serachAll").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
     </script>
 }

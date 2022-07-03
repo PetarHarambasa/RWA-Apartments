@@ -33,7 +33,22 @@ namespace MVC.Models
 
         public static void AddApartmentReview(ApartmentReview ar) => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReview), ar.ApartmentId, ar.UserId, ar.Details, ar.RatingStars);
 
+        public static ApartmentPicture LoadApartmentRepresentativePicture(int id)
+        {
+            ApartmentPicture apartmentPicture = new ApartmentPicture();
+            ds = SqlHelper.ExecuteDataset(cs, nameof(LoadApartmentRepresentativePicture), id);
 
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                apartmentPicture.Id = (int)row[nameof(ApartmentPicture.Id)];
+                apartmentPicture.ApartmentId = (int)row[nameof(ApartmentPicture.ApartmentId)];
+                apartmentPicture.Path = row[nameof(ApartmentPicture.Path)].ToString();
+                apartmentPicture.Base64Content = row[nameof(ApartmentPicture.Base64Content)].ToString();
+                apartmentPicture.Name = row[nameof(ApartmentPicture.Name)].ToString();
+                apartmentPicture.IsRepresentative = (bool)row[nameof(ApartmentPicture.IsRepresentative)];
+            }
+            return apartmentPicture;
+        }
         public static List<ApartmentPicture> LoadApartmentPicture(int id)
         {
             List<ApartmentPicture> apartmentPictures = new List<ApartmentPicture>();
@@ -55,8 +70,8 @@ namespace MVC.Models
             return apartmentPictures;
         }
 
-        public static void AddApartmentReservation(int apartmentId, User u) 
-            => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReservation), apartmentId, u.ApartmentReservationDetails,u.Id, u.UserName, u.Email, u.PhoneNumber, u.Address);
+        public static void AddApartmentReservation(int apartmentId, User u)
+            => SqlHelper.ExecuteDataset(cs, nameof(AddApartmentReservation), apartmentId, u.ApartmentReservationDetails, u.Id, u.UserName, u.Email, u.PhoneNumber, u.Address);
 
         public static User LoadUser(int userId)
         {
@@ -118,7 +133,7 @@ namespace MVC.Models
             return tags;
         }
 
-        public static Tag GetTag(int id) => LoadTags().FirstOrDefault(tag => tag.Id == id); 
+        public static Tag GetTag(int id) => LoadTags().FirstOrDefault(tag => tag.Id == id);
 
         public static Apartment LoadApartment(int id)
         {
@@ -141,7 +156,7 @@ namespace MVC.Models
 
             return a;
         }
-        
+
 
         public static List<Owner> LoadApartmentOwner()
         {
@@ -158,9 +173,9 @@ namespace MVC.Models
             return owners;
         }
 
-        public static Owner GetOwner(int id)=> LoadApartmentOwner().FirstOrDefault(owner => owner.Id == id);
-        public static Status GetStatus(int id)=> LoadApartmentStatus().FirstOrDefault(status => status.Id == id);
-        public static City GetCity(int id)=> LoadCity().FirstOrDefault(city => city.Id == id);
+        public static Owner GetOwner(int id) => LoadApartmentOwner().FirstOrDefault(owner => owner.Id == id);
+        public static Status GetStatus(int id) => LoadApartmentStatus().FirstOrDefault(status => status.Id == id);
+        public static City GetCity(int id) => LoadCity().FirstOrDefault(city => city.Id == id);
 
         public static List<Status> LoadApartmentStatus()
         {

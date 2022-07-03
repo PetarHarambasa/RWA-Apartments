@@ -281,6 +281,15 @@ BEGIN
 END
 GO
 
+--PROCS: LoadApartmentRepresentativePicture
+CREATE PROCEDURE LoadApartmentRepresentativePicture
+	@apartmentId INT
+AS
+BEGIN
+	SELECT * FROM ApartmentPicture WHERE ApartmentId=@apartmentId AND IsRepresentative = 1
+END
+GO
+
 --PROCS: LoadTaggedApartmentByApartmentId
 CREATE PROCEDURE LoadTaggedApartmentByApartmentId
 	@apartmentId INT
