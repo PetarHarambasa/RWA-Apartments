@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_LoggedIn.cshtml";
 }
 
+<link rel="stylesheet" href="~/Content/starability-basic.css" />
+
 <div class="row">
     <h2>Apartments List</h2>
 
@@ -17,6 +19,18 @@
             <img class="card-img-top" src="@apartmentPic.Path.Remove(0,1)">
             <div class="card-body">
                 <h5 class="card-title">@apartment.Name</h5>
+                <fieldset class="starability-basic" id="rates-@apartment.Id">
+                    <input type="radio" name="rating" value="1" />
+                    <label title="Terrible">1 star</label>
+                    <input type="radio" name="rating" value="2" />
+                    <label title="not good">2 stars</label>
+                    <input type="radio" name="rating" value="3" />
+                    <label title="Average">3 stars</label>
+                    <input type="radio" name="rating" value="4" />
+                    <label title="Very good">4 stars</label>
+                    <input type="radio" name="rating" py-3" value="5" />
+                    <label title="Amazing">5 stars</label>
+                </fieldset>
                 <p class="card-text">
                     Address: @apartment.Address
                 </p>
