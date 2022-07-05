@@ -49,6 +49,84 @@ namespace MVC.Models
             }
             return apartmentPicture;
         }
+
+        public static List<Apartment> ApartmentsByAppliedFilter(int numberOfRooms, int numberOfAdults, int numberOfChildren)
+        {
+            List<Apartment> apartments = new List<Apartment>();
+            ds = SqlHelper.ExecuteDataset(cs, nameof(ApartmentsByAppliedFilter), numberOfRooms, numberOfAdults, numberOfChildren);
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                var apartment = new Apartment();
+
+                apartment.Id = (int)row[nameof(Apartment.Id)];
+                apartment.OwnerId = (row[nameof(Apartment.OwnerId)] != DBNull.Value ? (int)row[nameof(Apartment.OwnerId)] : 1);
+                apartment.StatusId = (row[nameof(Apartment.StatusId)] != DBNull.Value ? (int)row[nameof(Apartment.StatusId)] : 1);
+                apartment.CityId = (row[nameof(Apartment.CityId)] != DBNull.Value ? (int)row[nameof(Apartment.CityId)] : 1);
+                apartment.Address = row[nameof(Apartment.Address)].ToString();
+                apartment.Name = row[nameof(Apartment.Name)].ToString();
+                apartment.NameEng = row[nameof(Apartment.NameEng)].ToString();
+                apartment.Price = (decimal)row[nameof(Apartment.Price)];
+                apartment.MaxAdults = (int)row[nameof(Apartment.MaxAdults)];
+                apartment.MaxChildren = (int)row[nameof(Apartment.MaxChildren)];
+                apartment.TotalRooms = (int)row[nameof(Apartment.TotalRooms)];
+                apartment.BeachDistance = (int)row[nameof(Apartment.BeachDistance)];
+                apartments.Add(apartment);
+            }
+            return apartments;
+        }
+
+        public static List<Apartment> LoadApartmentHighPrice()
+        {
+            List<Apartment> apartments = new List<Apartment>();
+            ds = SqlHelper.ExecuteDataset(cs, nameof(LoadApartmentHighPrice));
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                var apartment = new Apartment();
+
+                apartment.Id = (int)row[nameof(Apartment.Id)];
+                apartment.OwnerId = (row[nameof(Apartment.OwnerId)] != DBNull.Value ? (int)row[nameof(Apartment.OwnerId)] : 1);
+                apartment.StatusId = (row[nameof(Apartment.StatusId)] != DBNull.Value ? (int)row[nameof(Apartment.StatusId)] : 1);
+                apartment.CityId = (row[nameof(Apartment.CityId)] != DBNull.Value ? (int)row[nameof(Apartment.CityId)] : 1);
+                apartment.Address = row[nameof(Apartment.Address)].ToString();
+                apartment.Name = row[nameof(Apartment.Name)].ToString();
+                apartment.NameEng = row[nameof(Apartment.NameEng)].ToString();
+                apartment.Price = (decimal)row[nameof(Apartment.Price)];
+                apartment.MaxAdults = (int)row[nameof(Apartment.MaxAdults)];
+                apartment.MaxChildren = (int)row[nameof(Apartment.MaxChildren)];
+                apartment.TotalRooms = (int)row[nameof(Apartment.TotalRooms)];
+                apartment.BeachDistance = (int)row[nameof(Apartment.BeachDistance)];
+                apartments.Add(apartment);
+            }
+            return apartments;
+
+        }public static List<Apartment> LoadApartmentLowPrice()
+        {
+            List<Apartment> apartments = new List<Apartment>();
+            ds = SqlHelper.ExecuteDataset(cs, nameof(LoadApartmentLowPrice));
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                var apartment = new Apartment();
+
+                apartment.Id = (int)row[nameof(Apartment.Id)];
+                apartment.OwnerId = (row[nameof(Apartment.OwnerId)] != DBNull.Value ? (int)row[nameof(Apartment.OwnerId)] : 1);
+                apartment.StatusId = (row[nameof(Apartment.StatusId)] != DBNull.Value ? (int)row[nameof(Apartment.StatusId)] : 1);
+                apartment.CityId = (row[nameof(Apartment.CityId)] != DBNull.Value ? (int)row[nameof(Apartment.CityId)] : 1);
+                apartment.Address = row[nameof(Apartment.Address)].ToString();
+                apartment.Name = row[nameof(Apartment.Name)].ToString();
+                apartment.NameEng = row[nameof(Apartment.NameEng)].ToString();
+                apartment.Price = (decimal)row[nameof(Apartment.Price)];
+                apartment.MaxAdults = (int)row[nameof(Apartment.MaxAdults)];
+                apartment.MaxChildren = (int)row[nameof(Apartment.MaxChildren)];
+                apartment.TotalRooms = (int)row[nameof(Apartment.TotalRooms)];
+                apartment.BeachDistance = (int)row[nameof(Apartment.BeachDistance)];
+                apartments.Add(apartment);
+            }
+            return apartments;
+        }
+
         public static List<ApartmentPicture> LoadApartmentPicture(int id)
         {
             List<ApartmentPicture> apartmentPictures = new List<ApartmentPicture>();
@@ -66,7 +144,6 @@ namespace MVC.Models
                 apartmentPicture.IsRepresentative = (bool)row[nameof(ApartmentPicture.IsRepresentative)];
                 apartmentPictures.Add(apartmentPicture);
             }
-
             return apartmentPictures;
         }
 

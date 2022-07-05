@@ -353,3 +353,37 @@ INSERT INTO ApartmentReview(ApartmentId, UserId, Details, Stars)
 VALUES (@apartmentId, @userId, @details, @star)
 END
 GO
+
+--PROC LoadApartmentHighPrice
+CREATE PROCEDURE LoadApartmentHighPrice
+AS
+BEGIN
+SELECT Id, DeletedAt ,OwnerId, StatusId, CityId, Address, Name, NameEng, Price, MaxAdults, MaxChildren, TotalRooms, BeachDistance FROM [dbo].[Apartment] 
+WHERE DeletedAt IS NULL AND StatusId = 3
+ORDER BY Price DESC
+END
+GO
+
+--PROC LoadApartmentLowPrice
+CREATE PROCEDURE LoadApartmentLowPrice
+AS
+BEGIN
+SELECT Id, DeletedAt ,OwnerId, StatusId, CityId, Address, Name, NameEng, Price, MaxAdults, MaxChildren, TotalRooms, BeachDistance FROM [dbo].[Apartment] 
+WHERE DeletedAt IS NULL AND StatusId = 3
+ORDER BY Price ASC
+END
+GO
+
+--PROC ApartmentsByAppliedFilter
+CREATE PROCEDURE ApartmentsByAppliedFilter
+	@numberOfRooms int,
+	@numberOfAdults int,
+	@numberOfChildren int
+AS
+BEGIN
+SELECT Id, DeletedAt ,OwnerId, StatusId, CityId, Address, Name, NameEng, Price, MaxAdults, MaxChildren, TotalRooms, BeachDistance FROM [dbo].[Apartment] 
+WHERE DeletedAt IS NULL AND StatusId = 3 AND TotalRooms = @numberOfRooms AND MaxAdults = @numberOfAdults AND MaxChildren = @numberOfChildren
+END
+GO
+
+exec ApartmentsByAppliedFilter 2,2,2

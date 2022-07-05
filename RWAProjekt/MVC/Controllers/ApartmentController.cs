@@ -31,7 +31,7 @@ namespace MVC.Controllers
         public ActionResult Index()
         {
             return View(Repo.LoadFreeApartments());
-        }
+        } 
 
         [HttpGet]
         public async Task<ActionResult> Details(int id)
